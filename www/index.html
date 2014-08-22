@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+        <link rel="stylesheet" type="text/css" href="css/notes.css" />
+        <link rel="stylesheet" type="text/css" href="css/subject.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/appframework/af.ui.css" />
+        <link rel="stylesheet" type="text/css" href="css/appframework/icons.css" />
+
+
+        <script type="text/javascript" src="js/frameworks/jquery-1.11.1.js"></script>
+        <script type="text/javascript" src="js/frameworks/jq.appframework.js"></script>
+        <script type="text/javascript" src="js/frameworks/appframework.ui.js"></script>
+        <script type="text/javascript" src="js/frameworks/pouchdb.js"></script>
+        <script type="text/javascript" src="js/frameworks/jscolor.js"></script>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+
+        <script type="text/javascript" src="js/util.js"></script>
+
+        <script type="text/javascript" src="js/dbManager.js"></script>
+        <script type="text/javascript" src="js/calendar.js"></script>
+        <script type="text/javascript" src="js/noteManager.js"></script>
+        <script type="text/javascript" src="js/subjectManager.js"></script>
+        <script type="text/javascript" src="js/userManager.js"></script>
+        
+        <script type="text/javascript" src="js/index.js"></script>
+        <!-- A bunch of bullcrap plugin inclusions without which this stupid library dies -->
+        <script type="text/javascript" src="js/plugins/af.touchLayer.js"></script>
+        <script type="text/javascript" src="js/plugins/af.touchEvents.js"></script>
+        <script type="text/javascript" src="js/plugins/af.scroller.js"></script>
+        <script type="text/javascript" src="js/plugins/af.scrollScreen.js"></script>
+        <script type="text/javascript" src="js/plugins/af.css3animate.js"></script>
+
+
+        <title>NoteBook</title>
+    </head>
+    <body>
+        <div id="afui" class="bb">
+            <script type="text/javascript">
+
+                app.initialize();
+            </script>
+            <div id="header" class="header">
+                <a id="backButton" class="button" ></a>
+            </div>
+
+            <div id="content">
+                <div id="notice" data-title="Notice">
+                    <div id="splashscreen" class="ui-loader">
+                        <div style="margin-top: 10px;"><div id="overlay" class="loading"></div><h1>Loading...</h1></div>
+                    </div>
+                    <div id="notice-info" class="notice-info success">Info message</div>
+                    <div id="notice-success" class="notice-success success">Successful
+                        operation message</div>
+                    <div id="notice-warning" class="notice-warning error">Warning message</div>
+                    <div id="notice-error" class="notice-error error">
+                    </div>
+                    <div id="sync-wrapper">
+                        <div id="sync-success">Currently syncing</div>
+                        <div id="sync-error">There was a problem syncing</div>
+                    </div>
+                </div>
+                <div id="login" data-title="Login" selected="true" class="panel pad" js-scrolling="true">
+
+
+                    <form id="loginForm" name="loginForm" action="#" method="get">
+                        <input placeholder="Username" class="big-field" id="username" type="text">
+                        <div class="grid">
+                            <div class="col2"><button id="cancelLogin" type="reset">Cancel</button></div>
+                            <div class="col2"><button id="submitLogin" type="submit">Submit</button></div>
+                        </div>
+                    </form>
+
+
+                </div>	
+                <div id="mainOptions" data-title="Home" data-footer="navbar_main" class="panel pad" js-scrolling="true" >
+                    <div id="options" class="main-content">
+                        <div class="grid">
+                            <div id="calLink" class="col2 nav calendar-icon ">
+                                <a id="a_calLink" href="#monthlyView" data-transition="slide" name="calLink" class="option icon">Calendar</a>
+                            </div>
+                            <div class="col2 nav notes-icon ">
+
+                                <a id="notesLink" data-transition="slide" name="notesLink" href="#noteList" class="option icon">Notes</a>
+                            </div>
+                            <div class="col2 nav subject-icon">
+                                <a id="subjectLink" data-transition="slide"  name="subjectLink" href="#viewSubjectList" class="option icon">Subjects</a>
+                            </div>
+                            <div class="col2 nav assignment-icon">
+                                <a id="assignmentLink" data-transition="slide" name="assignmentLink" href="" data-persist-ajax="true" class="option icon">Assignments</a>
+                            </div>
+                            <div class="col2 nav profile-icon">
+                                <a id="profileLink" data-transition="slide" name="profileLink" href="#viewProfile" data-persist-ajax="true" class="option icon">Profile</a>
+                            </div>
+                            <div class="col2 nav about-icon">
+                                <a id="aboutLink" data-transition="slide"  name="aboutLink" href="#license" class="option icon">About</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div id="monthlyView" data-title="Montly View" data-footer="navbar_cal" class="panel pad" js-scrolling="true" >
+                    <div class="navbar">
+                        <ul class="grid">
+                            <li class="col3" id="preMonth">Previous</li>
+                            <li class="col3" id="currMonth"></li>
+                            <li class="col3" id="nextMonth">Next</li>
+                        </ul>
+                    </div>
+                    <div id="monthlyViewData" class="calBox">
+
+                        <div class="week-row head-row">
+                            <div class="day-col chead">Monday</div>
+                            <div class="day-col chead">Tuesday</div>
+                            <div class="day-col chead">Wednesday</div>
+                            <div class="day-col chead">Thursday</div>
+                            <div class="day-col chead">Friday</div>
+                            <div class="day-col chead">Saturday</div>
+                            <div class="day-col chead">Sunday</div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day1"></div>
+                            <div class="day-col" id="day2"></div>
+                            <div class="day-col" id="day3"></div>
+                            <div class="day-col" id="day4"></div>
+                            <div class="day-col" id="day5"></div>
+                            <div class="day-col" id="day6"></div>
+                            <div class="day-col" id="day7"></div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day8"></div>
+                            <div class="day-col" id="day9"></div>
+                            <div class="day-col" id="day10"></div>
+                            <div class="day-col" id="day11"></div>
+                            <div class="day-col" id="day12"></div>
+                            <div class="day-col" id="day13"></div>
+                            <div class="day-col" id="day14"></div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day15"></div>
+                            <div class="day-col" id="day16"></div>
+                            <div class="day-col" id="day17"></div>
+                            <div class="day-col" id="day18"></div>
+                            <div class="day-col" id="day19"></div>
+                            <div class="day-col" id="day20"></div>
+                            <div class="day-col" id="day21"></div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day22"></div>
+                            <div class="day-col" id="day23"></div>
+                            <div class="day-col" id="day24"></div>
+                            <div class="day-col" id="day25"></div>
+                            <div class="day-col" id="day26"></div>
+                            <div class="day-col" id="day27"></div>
+                            <div class="day-col" id="day28"></div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day29"></div>
+                            <div class="day-col" id="day30"></div>
+                            <div class="day-col" id="day31"></div>
+                            <div class="day-col" id="day32"></div>
+                            <div class="day-col" id="day33"></div>
+                            <div class="day-col" id="day34"></div>
+                            <div class="day-col" id="day35"></div>
+                        </div>
+                        <div class="week-row">
+                            <div class="day-col" id="day36"></div>
+                            <div class="day-col" id="day37"></div>
+                            <div class="day-col" id="day38"></div>
+                            <div class="day-col" id="day39"></div>
+                            <div class="day-col" id="day40"></div>
+                            <div class="day-col" id="day41"></div>
+                            <div class="day-col" id="day42"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="dailyView" data-title="Daily View" data-footer="navbar_cal" class="panel pad" js-scrolling="true" >
+                    <div class="navbar">
+                        <ul class="grid">
+                            <li class="col3" id="preDay">Previous</li>
+                            <li class="col3" id="currDay"></li>
+                            <li class="col3" id="nextDay">Next</li>
+                        </ul>
+                    </div>
+                    <div id="dailyViewData">
+                        <!-- Populate via calendar.js -->
+
+
+                    </div>
+
+                </div>
+                <div id="weeklyView" data-title="Weekly View" data-footer="navbar_cal" class="panel pad" js-scrolling="true" >
+                    <div class="navbar">
+                        <ul class="grid">
+                            <li class="col3" id="preWeek">Previous</li>
+                            <li class="col3" id="currWeek"></li>
+                            <li class="col3" id="nextWeek">Next</li>
+                        </ul>
+                    </div>
+                    <div id="weeklyViewData">
+                        <!-- Populate via calendar.js -->
+                    </div>
+
+                </div>
+                <div id="noteList" data-title="Notes" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+                    <header>
+                        <div class="headtext">Notes</div>
+                        <span id="note-count"></span>
+                        <a id="backButton" class="button" ></a>
+                    </header>
+
+                    <div id="viewList">
+                        <ul id="ul_noteList" class="list inset">
+                            <li id='li_new'>
+                                <a href="#newNote" class='icon add'>Add a new note.</a>
+                            </li>
+                        </ul></div>
+
+                </div>
+                <div id="viewNote" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+                    <header>
+                        <div id="noteHead" class="headtext">Notes</div>
+                        <a id="backButton" class="button" ></a>
+                    </header>
+
+                    <div id="noteItem" class="clear">
+                        <div id="noteItemView">
+                        
+                        </div>
+                    </div>
+
+                </div>
+                <div id="newNote" data-title="Add a new note" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+
+                    <div class="formGroupHead">Edit Note</div>
+                    <form id="newNoteForm" name="newNoteForm" action="#" method="get">
+                        <input id="noteRev" type="hidden">
+                        <input id="noteId" type="hidden">
+                        <div class="input-group">
+                            <input placeholder="Name" class="big-field" id="noteName" type="text">
+                            <textarea id="noteSummary"  class="textbox" rows="6" placeholder="Describe the note..."></textarea>
+                        </div>
+
+                        <div class="form_item">
+                            <label for="noteType" class="noteItem">Type of note:</label>
+                            <select name="noteType" id="noteType">
+                                <option value="personal">Personal</option>
+                                <option value="homework">Homework</option>
+                                <option value="classwork">Classwork</option>
+                            </select>
+                        </div>
+
+                        <div class="form_item">
+                            <div class="noteItem">Starts at:</div>
+                            <div id="noteStartDaySelCal"></div>
+                            <button class="icon calendar" type="button" onclick="toggleMiniMonthlyView(null, 'noteStartDay', 'noteStartDaySelCal');"></button>
+                            <input placeholder="DD-MM-YYYY" id="noteStartDay" type="text" onblur="hideMiniMonthlyView('noteStartDaySelCal');"
+                                   onfocus="showMiniMonthlyView('noteStartDaySelCal');">
+
+                            <select name="noteStartHour" id="noteStartHour">
+
+                            </select>
+                        </div>
+                        <div class="form_item">
+                            <label class="noteItem">Is this a periodic event?</label>
+                            <input type="checkbox" name="notePeriodic" value="0" id="notePeriodic" class="toggle"> <label for="notePeriodic" data-on="Yes" data-off="No"> <span></span> </label>
+                        </div>
+                        <div id="divEndAt" class="form_item">
+                            <div class="noteItem">Ends at:</div>
+                            <div id="noteEndDaySelCal"></div>
+                            <button class="icon calendar" type="button" onclick="toggleMiniMonthlyView(null, 'noteEndDay', 'noteEndDaySelCal');"
+                                    onblur="hideMiniMonthlyView('noteStartDaySelCal');"></button>
+                            <input placeholder="DD-MM-YYYY" name="noteEndDay" id="noteEndDay" type="text" onblur="hideMiniMonthlyView('noteStartDaySelCal');"
+                                   onfocus="showMiniMonthlyView(null, 'noteEndDay', 'noteStartDaySelCal');">
+                            <select name="noteEndHour" id="noteEndHour">
+
+                            </select>
+                        </div>
+
+                        <div class="form_item">
+                            <label for="noteDuration" class="noteItem">Duration(minutes):</label>
+                            <select name="noteDuration" id="noteDuration">
+                                
+                            </select>
+                        </div>
+
+                        <div class="form_item">
+                            <label for="noteAbstraction" class="noteItem">Abstraction:</label>
+                            <select name="noteAbstraction" id="noteAbstraction">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                                <option value="shared">Shared</option>
+                            </select>
+                        </div>
+
+                        <div class="grid">
+                            <div class="col2"><button id="cancelNewNote" type="reset">Cancel</button></div>
+                            <div class="col2"><button id="submitNewNote" type="submit">Submit</button></div>
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+                <div id="viewSubjectList" data-title="Subjects" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+
+                    <div id="subjectData" class="clear">
+                        <div id="subjectNav"></div>
+                        <div id="subjectList">
+                            <ul id="ul_subjList" class="list inset">
+                            <li id='li_new'>
+                                <a href="#editSubject" class='icon add'>Add a new Subj.</a>
+                            </li>
+                        </ul>
+                            <!-- Populate via subjectManager.js -->
+                        </div>
+                    </div>
+                </div>
+                <div id="viewSubject" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+                    <header>
+                        <div id="subjHead" class="headtext">Subject</div>
+                        <a id="backButton" class="button" ></a>
+                    </header>
+                    <div id="subjectItem" class="clear">
+                        <div id="subjectItemView">
+                            <!-- Populate via subjectManager.js -->
+                        </div>
+                    </div>
+                </div>
+                <div id="editSubject" data-title="Edit Subject" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+
+                    <div class="clear">
+
+                        <form id="editSubjectForm" action="#" method="get">
+                            <input id="subRev" type="hidden">
+                            <input id="subId" type="hidden">
+                            <div class="input-group">
+                                <div class="formGroupHead">Basic</div>
+                                <input placeholder="Name"  class="big-field" id="e_subName" type="text">
+                                <input placeholder="Short Unique Name"  class="big-field" id="e_subShortName" type="text">
+                                
+                                <input id="e_subColor" class="color{hash:true} control big-field" type="text">
+                                
+                                <textarea id="e_subSummary"  class="textbox" rows="6" placeholder="Describe the subject..."></textarea>
+                            </div>
+
+                            <div class="form_item">
+                                <div class="half-field">
+                                <label for="e_subStartDate" class="noteItem">Start Date:</label>
+                                <div id="subStartDateCal"></div>
+                                <input id="e_subStartDate" type="text" class="min-calendar-icon control" onfocus="showMiniMonthlyView(null, 'e_subStartDate', 'subStartDateCal');">
+                                <!--                         onblur="hideMiniMonthlyView('dobSelCal');"-->
+                                </div>
+
+                                <div class="half-field">
+                                <label for="e_subEndDate" class="noteItem">Finishes At:</label>
+                                <div id="subEndDateCal"></div>
+                                <input id="e_subEndDate" type="text" class="min-calendar-icon control" onfocus="showMiniMonthlyView(null, 'e_subEndDate', 'subEndDateCal');">
+                                <!--                         onblur="hideMiniMonthlyView('dobSelCal');"-->
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="formGroupHead">Details</div>
+                                <input placeholder="Teacher" class="big-field" id="e_subTeacher" type="text">
+                                <textarea id="e_subLinks" class="textbox" rows="6" placeholder="Helpful links..."></textarea>
+                            </div>
+
+                            <div class="grid">
+                                <div class="col2"><button id="cancelEditProfile" type="reset">Cancel</button></div>
+                                <div class="col2"><button id="submitEditProfile" type="submit">Submit</button></div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+                <div id="viewProfile" data-title="View Profile" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+
+                    <div id="userStats" class="clear">
+                        <div class="pic">
+                            <a href="#"><img src="img/profileIcon.png" width="150" height="150" /></a>
+                        </div>
+                        <div class="data">
+                            <div id="myName"></div>
+                            <div id="myPlace"></div>
+                            <div id="myDob"></div>
+                            <div id="myEmail"></div>
+                            <div id="myWebsite"></div>
+                            <div id="myHobbies"></div>
+                            <div id="myLinks"></div>
+                            <div id="myText" class="textbox"></div>
+                            <div id="myNumber"></div>
+                        </div>
+                        <button onclick="editProfile();" type="button" class="icon pencil">Edit</button>
+                    </div>
+                </div>
+                <div id="editProfile" data-title="Edit Profile" data-footer="navbar_main" class="panel pad" js-scrolling="true">
+
+                    <div id="userStats" class="clear">
+
+                        <form id="editProfileForm" action="#" method="get">
+                            <input id="profileRev" type="hidden">
+                            <div class="input-group">
+                                <div class="formGroupHead">Basic</div>
+                                <input placeholder="Name" class="big-field" id="e_myName" type="text">
+
+                                <div id="dobSelCal"></div>
+                                <input id="e_myDob" type="text" class="control" size="10" onfocus="showMiniMonthlyView(null, 'e_myDob', 'dobSelCal');">
+                                <!--                         onblur="hideMiniMonthlyView('dobSelCal');"-->
+                                <input type="radio" name="gender" value='Male' id="Male" >  <label for="Male">Male</label>
+                                <input type="radio" name="gender" value='Female' id="Female" >  <label for="Female">Female</label>
+
+                                <input placeholder="Place" class="half-field" id="e_myPlace" type="text">
+                                <input placeholder="XXX-XXX-XXXX" class="half-field"  id="e_myNumber" type="text">
+                                <input placeholder="Your email..." id="e_myEmail" class="big-field" type="text">
+                            </div>
+                            <div class="input-group">
+                                <div class="formGroupHead">Credentials</div>
+                                <input placeholder="Username" class="big-field" id="e_myUsername" type="text">
+
+                            </div>
+                            <div class="input-group">
+                                <div class="formGroupHead">Links</div>
+                                <textarea id="e_myText" class="textbox" rows="6" placeholder="Describe yourself..."></textarea>
+                                <textarea id="e_myHobbies" class="textbox" rows="6" placeholder="Enter your hobbies..."></textarea>
+                                <input placeholder="http://" class="big-field" id="e_myWebsite" type="text">
+                                <textarea id="e_myLinks" class="textbox" rows="6" placeholder="Enter your social media site links(1 per line)..."></textarea>
+                            </div>
+                            <div class="grid">
+                                <div class="col2"><button id="cancelEditProfile" type="reset">Cancel</button></div>
+                                <div class="col2"><button id="submitEditProfile" type="submit">Submit</button></div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+                <div id="license" data-footer="navbar-main" data-title="About us" class="panel pad">
+
+                    <ul>
+                        <li>
+                            Icons by <a href="http://www.graphicsfuel.com/">GraphicsFuel</a> found at 
+                            <a href="https://www.iconfinder.com/iconsets/20-flat-icons">Icon Finder</a>
+                        </li>
+                        <li>
+                            Calendar from <a href="http://jsfiddle.net/Gajotres/f6xeE/">JSFiddle</a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- content -->
+
+            <footer id="navbar_main">
+                <a class="icon" href="calendar.html">Calendar</a>
+                <a href="notes.html" class="icon">Notes</a>
+                <a href="assignments.html" class="icon">Assignments</a>
+            </footer>
+            <footer id="navbar_cal">
+                <a href="#monthlyView" data-ajax="false">Monthly View</a>
+                <a href="#dailyView" data-ajax="false">Daily View</a>
+                <a href="#weeklyView" data-ajax="false">Weekly View</a>
+            </footer>
+            <script>
+
+            </script>
+        </div>
+    </body>
+</html>

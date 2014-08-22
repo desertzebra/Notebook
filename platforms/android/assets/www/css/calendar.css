@@ -1,0 +1,183 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 5, 2014, 10:59:16 PM
+    Author     : desertzebra
+*/
+
+
+.calBox {
+   display: table;
+   height: 100%;
+    width: 100%;
+}
+
+
+.week-row {
+    display:table-row;
+}
+
+.day-col{
+    display:table-cell;
+    padding: 2px;
+    min-width:30px;
+    min-height: 30px;
+    border:1px solid red;
+    background-color:#333;
+    color:#ddd;
+    text-shadow: 0px 1px 0px #eee;
+    outline: 1px none #db3939;
+    outline-offset: 3px;
+}
+.selCol{
+    background-color:#33e;
+}
+
+
+.calCap{
+    //display:table-caption;
+    background-color:#eee;
+    color:#555;
+    text-shadow: 0px 1px 0px #db3939;
+    display:block;
+    text-align:center;
+    width:100%;
+    min-height:35px;
+    vertical-align: middle;
+    font-size:1.5em;
+    font-weight:bold;
+}
+.chead{
+    text-align:center;
+    font-weight:bold;
+}
+.head-row {
+    display:table-header-group;
+}
+
+.navbar{
+    padding:2px;
+    margin:2px;
+    text-align: center;
+}
+.navbar>ul{
+    list-style: none;
+}
+.navbar>ul>li>a{
+    color:#555;
+    text-shadow: 0px 1px 0px #db3939;
+    display:block;
+    width:90%;
+    min-height:35px;
+    vertical-align: middle;
+}
+.previous-btn{
+    float:left;
+}
+.next-btn{
+    float:right;
+}
+
+.day-col-mini{
+    display:table-cell;
+    padding: 1px;
+    border:1px solid red;
+    background-color:#333;
+    color:#ddd;
+    font-size:0.7em;
+    font-weight: lighter;
+}
+
+.mini-cal{
+    background-color:#eee;
+    color:#555;
+    display:block;
+    text-align:center;
+    width:300px;
+    vertical-align: middle;
+    font-size:0.8em;
+    position: relative;
+    top: 5px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbcfe2 #c8cee7 #c4c7d7;
+    border-radius: 3px;
+    background-color: #fdfdfd;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fdfdfd), color-stop(100%, #eceef4));
+    background-image: -webkit-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -moz-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -ms-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: -o-linear-gradient(top, #fdfdfd, #eceef4);
+    background-image: linear-gradient(top, #fdfdfd, #eceef4);
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    
+}
+
+.mini-cal a {
+    display: block;
+    position: relative;
+    margin: 0 -1px;
+    color: #808394;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+.mini-cal a:before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -9px;
+}
+
+.mini-cal a:hover {
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
+    border-color: #2380dd #2179d5 #1a60aa;
+    background-color: #338cdf;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #59aaf4), color-stop(100%, #338cdf));
+    background-image: -webkit-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -moz-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -ms-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: -o-linear-gradient(top, #59aaf4, #338cdf);
+    background-image: linear-gradient(top, #59aaf4, #338cdf);
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -ms-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    -o-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.mini-calCap{
+    //display:table-caption;
+    background-color:#eee;
+    color:#555;
+    text-shadow: 0px 1px 0px #db3939;
+    display:block;
+    text-align:center;
+    vertical-align: middle;
+    font-size:1em;
+    font-weight:bold;
+}
+
+.mini-previous-btn{
+    float:left;
+}
+.mini-next-btn{
+    float:right;
+}

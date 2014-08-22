@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+       <link rel="stylesheet" type="text/css" href="css/index.css" />
+       <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+        <link rel="stylesheet" type="text/css" href="css/notes.css" />
+        <link rel="stylesheet" type="text/css" href="css/appframework/af.ui.base.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/appframework/af.ui.min.css" />
+        
+        
+        
+        <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+         <script type="text/javascript" src="js/jq.appframework.js"></script>
+        <script type="text/javascript" src="js/appframework.ui.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/pouchdb-2.2.3.js"></script>
+        <script type="text/javascript" src="js/noteManager.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+       
+        
+        <title>Notes</title>
+    </head>
+    <body onload="initNoteDb()">
+       <!-- Start of Notes Page: # -->
+        <div data-role="page" id="notes">
+            <div data-role="header">
+         <div id="notice">
+		<div id="notice-info" class="notice-info">Info message</div>
+		<div id="notice-success" class="notice-success">Successful
+			operation message</div>
+		<div id="notice-warning" class="notice-warning">Warning message</div>
+		<div id="notice-error" class="notice-error">
+		</div>
+            </div>
+        </div>
+            <div role="main" class="ui-content">
+                <script type="text/javascript" src="js/noteManager.js"></script>
+		<div class="headtext">Notes</div>
+                            <span id="note-count"></span>
+                            <div id="sync-wrapper">
+                            <div id="sync-success">Currently syncing</div>
+                            <div id="sync-error">There was a problem syncing</div>
+                            </div>
+                            <div id="viewList">
+                <ul id="noteList"></ul></div>
+                <div id="newNote" class="content-primary"  tabindex="0">
+                    
+                    <form id="newNoteForm" name="newNoteForm" action="#" method="get">
+                    <label>Add a new Note</label>
+
+			<div data-role="fieldcontain">
+	         <label for="noteName">Name:</label>
+	         <input type="text" data-mini="true" name="noteName" id="noteName" value=""  />
+			</div>
+
+			<div data-role="fieldcontain">
+			<label for="noteSummary">Summary:</label>
+			<textarea cols="40" rows="8" data-mini="true" name="noteSummary" id="noteSummary"></textarea>
+			</div>
+                    
+                        <div data-role="fieldcontain">
+				<label for="noteStarttime">Starts at:</label>
+			 	<input data-role="date" data-mini="true" name="noteStarttime" id="noteStarttime" type="text">
+			</div>
+                        
+                        <div data-role="fieldcontain">
+				<label for="noteEndtime">Ends at:</label>
+			 	<input data-role="date" data-mini="true" name="noteEndtime" id="noteEndtime" type="text">
+			</div>
+                        
+                        
+                    
+			<div data-role="fieldcontain">
+				<label for="noteDuration">Duration(minutes):</label>
+			 	<input type="range" data-mini="true" name="noteDuration" id="noteDuration" value="50" min="0" max="86400" data-highlight="true"  />
+			</div>
+                        
+			<div data-role="fieldcontain">
+				<label for="noteAbstraction" class="select">Abstraction:</label>
+				<select name="noteAbstraction" data-mini="true" id="noteAbstraction">
+					<option value="public">Public</option>
+					<option value="private">Private</option>
+					<option value="shared">Shared</option>
+				</select>
+			</div>
+
+		<div class="ui-body ui-body-b">
+		<fieldset class="ui-grid-a">
+				<div class="ui-block-a"><button type="submit" data-theme="d">Cancel</button></div>
+				<div class="ui-block-b"><button type="submit" data-theme="a">Submit</button></div>
+	    </fieldset>
+		</div>
+	</form>
+	</div><!--/content-primary -->		
+                </div>
+            <div data-role="footer" data-theme="a">
+                	
+      
+		<a href="index.html" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Back to home Page</a>
+            </div><!-- /footer -->
+        </div><!-- /Notes-->
+    </body>
+</html>

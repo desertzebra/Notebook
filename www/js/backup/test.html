@@ -1,0 +1,74 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <META http-equiv="pragma" content="no-cache">
+        <link href="css/appframework/icons.css" rel="stylesheet" type="text/css"/>
+        <link href="css/appframework/af.ui.css" rel="stylesheet" type="text/css"/>
+
+        
+
+        <script type="text/javascript" src="js/appmobi.js"></script>
+        <script type="text/javascript" src="js/appframework.ui.min.js"></script>
+        
+
+        <script type="text/javascript" language="javascript">
+            // This event handler is fired once the AppMobi libraries are ready
+//            function onDeviceReady() {
+//            	//$.ui.toggleNavMenu(false);
+//            	AppMobi.device.hideSplashScreen();
+//            	AppMobi.device.setAutoRotate(true);
+//            	
+//                setTimeout(function(){
+//                    $.ui.launch();
+//                },1000);
+//            }
+//
+//            //initial event handler to detect when appMobi is ready to roll
+//            document.addEventListener("appMobi.device.ready",onDeviceReady,false);
+        </script>
+
+
+        <script type="text/javascript" language="javascript">
+            //$.ui.autoLaunch=false;
+            $.ui.useOSThemes=false;
+            $.ui.showLoading=true;
+            $.ui.loadingText="Loading...";
+            $.ui.disableSideMenu();
+            $.ui.availableTransitions['default'] = $.ui.availableTransitions.none;
+            
+            $.ui.ready(function(){
+            	$.ui.toggleNavMenu(false);
+            	$.ui.backButtonText='Back';
+                if($.ui.useOSThemes && !$.os.ios && $("#afui").get(0).className!=="ios") { $("#afui").removeClass("ios"); };
+            });
+            //$.ui.launch();
+        </script>
+    </head>
+    <body>
+        <div id="afui" class="bb">
+
+
+<div id="content" style="">
+
+	<div class="panel" title="af demo" id="page_0" selected="true">
+		<ul class="list">
+			<li>
+				<a href="/tmp/af_demo/page1.html">Page1</a>
+			</li>
+			<li>
+				<a href="/tmp/af_demo/page2.html">Page2</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="navbar" style="display: none;">
+	<a href="#page_0" class="icon home" style="">Main</a>
+	<a href="/tmp/af_demo/page1.html" class="icon home">Page1</a>
+	<a href="/tmp/af_demo/page2.html" class="icon home">Page2</a>
+</div>
+</div></body></html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="initial-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/calendar.css" />
+        <link rel="stylesheet" type="text/css" href="css/notes.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/appframework/af.ui.css" />
+        <link rel="stylesheet" type="text/css" href="css/appframework/icons.css" />
+
+
+        <script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+        <script type="text/javascript">
+            $.noConflict();
+        </script>
+        <script type="text/javascript" src="js/jq.appframework.js"></script>
+        <script type="text/javascript" src="js/appframework.ui.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/pouchdb-2.2.3.js"></script>
+        <script type="text/javascript" src="js/noteManager.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/calendar.js"></script>
+        <!-- A bunch of bullcrap plugin inclusions without which this stupid library dies -->
+        <script type="text/javascript" src="js/plugins/af.touchLayer.js"></script>
+        <script type="text/javascript" src="js/plugins/af.touchEvents.js"></script>
+        <script type="text/javascript" src="js/plugins/af.scroller.js"></script>
+        <script type="text/javascript" src="js/plugins/af.scrollScreen.js"></script>
+        <script type="text/javascript" src="js/plugins/af.css3animate.js"></script>
+
+        <script type="text/javascript">
+            console.log("All javascript files loaded");
+        </script>
+        <title>Calendar</title>
+    </head>
+    <body onload="">
+        <div id="afui" class="bb">
+
+            <div id="header" class="header">
+                <a id="backButton" href="index.html" class="button" ></a>
+            </div>
+            <div id="content">
+            <div id="notice" data-title="Notice">
+                <div id="splashscreen" class="ui-loader">
+                    <div style="margin-top: 10px;"><div id="overlay" class="loading"></div><h1>Loading...</h1></div>
+                </div>
+                <div id="notice-info" class="notice-info">Info message</div>
+                <div id="notice-success" class="notice-success">Successful
+                    operation message</div>
+                <div id="notice-warning" class="notice-warning">Warning message</div>
+                <div id="notice-error" class="notice-error">
+                </div>
+            </div>
+            <div id="monthlyView" data-title="Montly View" class="panel pad" selected="true" js-scrolling="true" >
+                            <div class="navbar">
+                                <ul class="grid">
+                                    <li class="col3" id="preMonth">Previous</li>
+                                    <li class="col3" id="currMonth"></li>
+                                    <li class="col3" id="nextMonth">Next</li>
+                                </ul>
+                            </div>
+                            <div id="monthlyViewData" class="calBox">
+
+                                <div class="week-row head-row">
+                                    <div class="day-col chead">Monday</div>
+                                    <div class="day-col chead">Tuesday</div>
+                                    <div class="day-col chead">Wednesday</div>
+                                    <div class="day-col chead">Thursday</div>
+                                    <div class="day-col chead">Friday</div>
+                                    <div class="day-col chead">Saturday</div>
+                                    <div class="day-col chead">Sunday</div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day1"></div>
+                                    <div class="day-col" id="day2"></div>
+                                    <div class="day-col" id="day3"></div>
+                                    <div class="day-col" id="day4"></div>
+                                    <div class="day-col" id="day5"></div>
+                                    <div class="day-col" id="day6"></div>
+                                    <div class="day-col" id="day7"></div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day8"></div>
+                                    <div class="day-col" id="day9"></div>
+                                    <div class="day-col" id="day10"></div>
+                                    <div class="day-col" id="day11"></div>
+                                    <div class="day-col" id="day12"></div>
+                                    <div class="day-col" id="day13"></div>
+                                    <div class="day-col" id="day14"></div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day15"></div>
+                                    <div class="day-col" id="day16"></div>
+                                    <div class="day-col" id="day17"></div>
+                                    <div class="day-col" id="day18"></div>
+                                    <div class="day-col" id="day19"></div>
+                                    <div class="day-col" id="day20"></div>
+                                    <div class="day-col" id="day21"></div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day22"></div>
+                                    <div class="day-col" id="day23"></div>
+                                    <div class="day-col" id="day24"></div>
+                                    <div class="day-col" id="day25"></div>
+                                    <div class="day-col" id="day26"></div>
+                                    <div class="day-col" id="day27"></div>
+                                    <div class="day-col" id="day28"></div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day29"></div>
+                                    <div class="day-col" id="day30"></div>
+                                    <div class="day-col" id="day31"></div>
+                                    <div class="day-col" id="day32"></div>
+                                    <div class="day-col" id="day33"></div>
+                                    <div class="day-col" id="day34"></div>
+                                    <div class="day-col" id="day35"></div>
+                                </div>
+                                <div class="week-row">
+                                    <div class="day-col" id="day36"></div>
+                                    <div class="day-col" id="day37"></div>
+                                    <div class="day-col" id="day38"></div>
+                                    <div class="day-col" id="day39"></div>
+                                    <div class="day-col" id="day40"></div>
+                                    <div class="day-col" id="day41"></div>
+                                    <div class="day-col" id="day42"></div>
+                                </div>
+                            </div>
+            </div>
+            <div id="dailyView" data-title="Daily View" class="panel pad" js-scrolling="true" >
+                            <div class="navbar">
+                                <ul class="grid">
+                                    <li class="col3" id="preDay">Previous</li>
+                                    <li class="col3" id="currDay"></li>
+                                    <li class="col3" id="nextDay">Next</li>
+                                </ul>
+                            </div>
+                            <div id="dailyViewData">
+                                <!-- Populate via calendar.js -->
+
+
+                            </div>
+
+                        </div>
+            <div id="weeklyView" data-title="Weekly View" class="panel pad" js-scrolling="true" >
+                            <div class="navbar">
+                                <ul class="grid">
+                                    <li class="col3" id="preWeek">Previous</li>
+                                    <li class="col3" id="currWeek"></li>
+                                    <li class="col3" id="nextWeek">Next</li>
+                                </ul>
+                            </div>
+                            <div id="weeklyViewData">
+                                <!-- Populate via calendar.js -->
+                            </div>
+
+           </div>
+</div><!-- content -->
+            <div id="navbar" class="footer">
+                                <a href="#monthlyView" data-ajax="false">Monthly View</a>
+                                <a href="#dailyView" data-ajax="false">Daily View</a>
+                                <a href="#weeklyView" data-ajax="false">Weekly View</a>
+            </div>
+                
+        </div><!-- /afui -->
+    </body>
+</html>
